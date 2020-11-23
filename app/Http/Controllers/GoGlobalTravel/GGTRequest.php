@@ -16,7 +16,7 @@ class GGTRequest
         return $this->main;
     }
 
-    public function main11($sortOrder, $filterPriceMin, $filterPriceMax, $maximumWaitTime, $maxResponses, $filterRoomBasis, $nationality, $cityCode, $hotelId, $arrivalDate, $nights, $stars, $apartments)
+    public function hotelSearchMain($sortOrder, $filterPriceMin, $filterPriceMax, $maximumWaitTime, $maxResponses, $filterRoomBasis, $nationality, $cityCode, $hotelId, $arrivalDate, $nights, $stars, $apartments)
     {
         return $this->main =
             "<Main Version=\"2.3\" ResponseFormat=\"JSON\" IncludeGeo=\"false\" Currency=\"USD\">"
@@ -40,7 +40,7 @@ class GGTRequest
             </Main>";
     }
 
-    public function main6($hotelSearchCode)
+    public function hotelInfoMain($hotelSearchCode)
     {
         return $this->main =
             "<Main>"
@@ -49,7 +49,7 @@ class GGTRequest
 
     }
 
-    public function main2($agentReference, $hotelSearchCode, $arrivalDate, $nights, $noAlternativeHotel)
+    public function bookingInsertMain($agentReference, $hotelSearchCode, $arrivalDate, $nights, $noAlternativeHotel)
     {
         return $this->main =
             "<Main Version=\"2.3\" ResponseFormat=\"JSON\">"
@@ -68,15 +68,15 @@ class GGTRequest
             </Rooms>
             </Main>";
     }
-    public function main5($goBookingCode){
+    public function bookingStatusMain($goBookingCode){
         return $this->main =
             "<Main>".$this->setGoBookingCode($goBookingCode)."</Main>";
     }
-    public function main4($goBookingCode){
+    public function bookingSearchMain($goBookingCode){
         return $this->main =
             "<Main>".$this->setGoBookingCode($goBookingCode)."</Main>";
     }
-    public function main10($arrivalDateRangeFrom,$arrivalDateRangeTo,$paxName,$cityCode,$nights,$hotelName){
+    public function advBookingSearchMain($arrivalDateRangeFrom,$arrivalDateRangeTo,$paxName,$cityCode,$nights,$hotelName){
         return $this->main =
             "<Main>"
             .$this->setArrivalDateRangeFrom($arrivalDateRangeFrom)
@@ -88,11 +88,11 @@ class GGTRequest
             "</Main>";
     }
 
-    public function main3($goBookingCode){
+    public function bookingCancelMain($goBookingCode){
         return $this->main =
             "<Main>".$this->setGoBookingCode($goBookingCode)."</Main>";
     }
-    public function main9($hotelSearchCode,$arrivalDate){
+    public function bookingValuationMain($hotelSearchCode,$arrivalDate){
         return $this->main =
             "<Main>"
             .$this->setHotelSearchCode($hotelSearchCode)
@@ -100,7 +100,7 @@ class GGTRequest
             "</Main>";
     }
 
-    public function main8($goBookingCode,$getEmergencyPhone){
+    public function voucherDetailsMain($goBookingCode,$getEmergencyPhone){
 
         return $this->main =
             "<Main Version=\"2.3\">"
@@ -109,7 +109,7 @@ class GGTRequest
             "</Main>";
     }
 
-    public function main14($hotelSearchCode){
+    public function priceBreakdownMain($hotelSearchCode){
         return $this->main =
             "<Main>".$this->setHotelSearchCode($hotelSearchCode)."</Main>";
     }

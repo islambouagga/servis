@@ -11,148 +11,85 @@ class SpringTravelController extends \App\Http\Controllers\Controller
     {
         $this->stRequest = new STRequest();
     }
+    public function addServiceToWrapper(){
+        SoapWrapper::add(function ($service) {
+            $service
+                ->name('springT')
+                ->wsdl('http://www.resabooking.com/auto_hot_xft_test.php?wsdl')
+                ->trace(true);
+        });
+    }
     public function availabilityHotel()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('springT')
-                ->wsdl('http://www.resabooking.com/auto_hot_xft_test.php?wsdl')
-                ->trace(true);
-        });
-
-        $data = (array) $this->stRequest->availabilityhotelRequests();
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('springT', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
-            var_dump($service->call('availabilityhotel',$data ));
+        SoapWrapper::service('springT', function ($service)  {
+            var_dump($service->call('availabilityhotel',(array) $this->stRequest->availabilityhotelRequests() ));
         });
     }
-    public function detailhotel()
+    public function detailHotel()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('springT')
-                ->wsdl('http://www.resabooking.com/auto_hot_xft_test.php?wsdl')
-                ->trace(true);
-        });
-
-        $data = (array) $this->stRequest->detailhotelRequest();
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('springT', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
-            var_dump($service->call('detailhotel',$data ));
+        SoapWrapper::service('springT', function ($service){
+            var_dump($service->call('detailhotel',(array) $this->stRequest->detailhotelRequest() ));
         });
     }
     public function devis()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('springT')
-                ->wsdl('http://www.resabooking.com/auto_hot_xft_test.php?wsdl')
-                ->trace(true);
-        });
-
-        $data = (array) $this->stRequest->devisRequest();
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('springT', function ($service) use ($data) {
+        SoapWrapper::service('springT', function ($service) {
 //            var_dump($service->getFunctions());
-            var_dump($service->call('devis',$data ));
+            var_dump($service->call('devis', (array) $this->stRequest->devisRequest() ));
         });
     }
-    public function createbooking()
+    public function createBooking()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('springT')
-                ->wsdl('http://www.resabooking.com/auto_hot_xft_test.php?wsdl')
-                ->trace(true);
-        });
-
-        $data = (array) $this->stRequest->createbookingRequest();
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('springT', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
-            var_dump($service->call('createbooking',$data ));
+        SoapWrapper::service('springT', function ($service){
+            var_dump($service->call('createbooking',(array) $this->stRequest->createbookingRequest() ));
         });
     }
-    public function demandeannulation()
+    public function demandeAnnulation()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('springT')
-                ->wsdl('http://www.resabooking.com/auto_hot_xft_test.php?wsdl')
-                ->trace(true);
-        });
-
-        $data = (array) $this->stRequest->demandeannulationRequest();
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('springT', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
-            var_dump($service->call('demandeannulation',$data ));
+        SoapWrapper::service('springT', function ($service){
+            var_dump($service->call('demandeannulation',(array) $this->stRequest->demandeannulationRequest() ));
         });
     }
-    public function confirmannulation()
+    public function confirmAnnulation()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('springT')
-                ->wsdl('http://www.resabooking.com/auto_hot_xft_test.php?wsdl')
-                ->trace(true);
-        });
-
-        $data = (array) $this->stRequest->confirmannulationRequest();
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('springT', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
-            var_dump($service->call('confirmannulation',$data ));
+        SoapWrapper::service('springT', function ($service) {
+            var_dump($service->call('confirmannulation',(array) $this->stRequest->confirmannulationRequest() ));
         });
     }
-    public function getreservatio()
+    public function getReservatio()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('springT')
-                ->wsdl('http://www.resabooking.com/auto_hot_xft_test.php?wsdl')
-                ->trace(true);
-        });
-
-        $data = (array) $this->stRequest->getreservatioRequest();
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('springT', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
-            var_dump($service->call('getreservatio',$data ));
+        SoapWrapper::service('springT', function ($service) {
+            var_dump($service->call('getreservatio',(array) $this->stRequest->getreservatioRequest() ));
         });
     }
-    public function findreservation()
+    public function findReservation()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('springT')
-                ->wsdl('http://www.resabooking.com/auto_hot_xft_test.php?wsdl')
-                ->trace(true);
-        });
-
-        $data = (array) $this->stRequest->findreservationRequest();
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('springT', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
-            var_dump($service->call('findreservation',$data ));
+        SoapWrapper::service('springT', function ($service) {
+            var_dump($service->call('findreservation',(array) $this->stRequest->findreservationRequest() ));
         });
     }
 }

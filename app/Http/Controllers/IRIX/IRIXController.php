@@ -15,7 +15,18 @@ class IRIXController extends Controller
     {
         $this->irixRequest = new IRIXRequest();
     }
-
+    public function addServiceToWrapper(){
+        SoapWrapper::add(function ($service) {
+            $service
+                ->name('Irix')
+                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
+                ->trace(true)
+                ->customHeader([
+                    'ResellerCode' => 'CHRYSALIS',
+                    'Username' => 'chrysalisws',
+                    'Password' => 'Qwerty1!',]);
+        });
+    }
     public function StaticData_GetCountries()
     {
 
@@ -27,14 +38,20 @@ class IRIXController extends Controller
          <!--Optional:-->
          <ns:ApplicationId>?</ns:ApplicationId>
       </ns:AuthHeader>";
-
+//        $strHeaderComponent_Session = $this->AuthHeader();
         $objVar_Session_Inside = new \SoapVar($strHeaderComponent_Session, XSD_ANYXML, null, null, null);
         $objHeader_Session_Outside = new \SoapHeader('http://schemas.xmlsoap.org/soap/envelope/', 'SessionHeader', $objVar_Session_Inside);
+//        var_dump($objHeader_Session_Outside);
 
 
-
-//        $headerbody = array($this->AuthHeader());
-//
+//        $headerbody = "<ns:AuthHeader>
+//      <ns:ResellerCode>CHRYSALIS</ns:ResellerCode>
+//         <ns:Username>chrysalisws</ns:Username>
+//         <ns:Password>Qwerty1!</ns:Password>
+//         <!--Optional:-->
+//         <ns:ApplicationId>?</ns:ApplicationId>
+//      </ns:AuthHeader>";
+////
 //        $myheader =  new \SoapHeader("https://www.onlineb2bcenter.com/reseller/ws/?wsdl",'StaticData_GetCountries',$headerbody);
 
 
@@ -44,7 +61,9 @@ class IRIXController extends Controller
                 ->name('Irix')
                 ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
                 ->trace(true)
-                ->customHeader($objHeader_Session_Outside);
+                ->header('https://www.onlineb2bcenter.com/reseller/ws/?wsdl','StaticData_GetCountries',$objHeader_Session_Outside)
+//                ->customHeader($objHeader_Session_Outside)
+            ;
         });
 
 
@@ -58,36 +77,21 @@ class IRIXController extends Controller
         // Using the added service
         SoapWrapper::service('Irix', function ($service) use ($data) {
 //            var_dump($service->getFunctions());
+            var_dump($service->getLastRequestHeaders());
+//            var_dump($this->irixRequest->GetCountriesRQ());
             var_dump($service->call('StaticData_GetCountries', (array)$this->irixRequest->GetCountriesRQ()));
         });
 
     }
 
+
+
     public function StaticData_GetCities()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service)  {
             var_dump($service->call('Hotel_GetOfferDetails', (array)$this->irixRequest->GetCitiesRQ()));
         });
     }
@@ -95,28 +99,9 @@ class IRIXController extends Controller
     public function StaticData_GetLocations()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service){
             var_dump($service->call('StaticData_GetLocations', (array)$this->irixRequest->GetLocationsRQ()));
         });
     }
@@ -124,28 +109,9 @@ class IRIXController extends Controller
     public function StaticData_GetHotels()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service) {
             var_dump($service->call('StaticData_GetHotels', (array)$this->irixRequest->GetHotelsRQ()));
         });
     }
@@ -153,28 +119,9 @@ class IRIXController extends Controller
     public function StaticData_GetHotelDetails()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service) {
             var_dump($service->call('StaticData_GetHotelDetails', (array)$this->irixRequest->GetHotelDetailsRQ()));
         });
     }
@@ -182,28 +129,9 @@ class IRIXController extends Controller
     public function StaticData_GetNationalities()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service)  {
             var_dump($service->call('StaticData_GetNationalities', (array)$this->irixRequest->GetNationalitiesRQ()));
         });
     }
@@ -211,28 +139,9 @@ class IRIXController extends Controller
     public function StaticData_GetRegions()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service) {
             var_dump($service->call('StaticData_GetRegions', (array)$this->irixRequest->GetRegionsRQ()));
         });
     }
@@ -240,28 +149,9 @@ class IRIXController extends Controller
     public function Hotel_GetAvailability()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service) {
             var_dump($service->call('Hotel_GetAvailability', (array)$this->irixRequest->HotelGetAvailabilityRQ()));
         });
     }
@@ -269,28 +159,9 @@ class IRIXController extends Controller
     public function Hotel_GetPackagePrice()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service) {
             var_dump($service->call('Hotel_GetPackagePrice', (array)$this->irixRequest->HotelGetPackagePriceRQ()));
         });
     }
@@ -298,28 +169,10 @@ class IRIXController extends Controller
     public function Hotel_GetOfferDetails()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
+        $this->addServiceToWrapper();
 
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service)  {
             var_dump($service->call('Hotel_GetOfferDetails', (array)$this->irixRequest->HotelGetOfferDetailsRQ()));
         });
     }
@@ -327,28 +180,9 @@ class IRIXController extends Controller
     public function Hotel_MakeReservation()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service) {
             var_dump($service->call('Hotel_GetOfferDetails', (array)$this->irixRequest->HotelMakeReservationRQ()));
         });
     }
@@ -356,28 +190,9 @@ class IRIXController extends Controller
     public function Reservation_GetDocument()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service)  {
             var_dump($service->call('Hotel_GetOfferDetails', (array)$this->irixRequest->ReservationGetDocumentRQ()));
         });
     }
@@ -385,42 +200,11 @@ class IRIXController extends Controller
     public function Reservation_Cancel()
     {
         // Add a new service to the wrapper
-        SoapWrapper::add(function ($service) {
-            $service
-                ->name('Irix')
-                ->wsdl('https://www.onlineb2bcenter.com/reseller/ws/?wsdl')
-                ->trace(true)
-                ->customHeader([
-                    'ResellerCode' => 'CHRYSALIS',
-                    'Username' => 'chrysalisws',
-                    'Password' => 'Qwerty1!',]);
-        });
-
-
-        $data = [
-            'CurrencyFrom' => 'USD',
-            'CurrencyTo' => 'EUR',
-            'RateDate' => '2014-06-05',
-            'Amount' => '1000'
-        ];
-
+        $this->addServiceToWrapper();
         // Using the added service
-        SoapWrapper::service('Irix', function ($service) use ($data) {
-//            var_dump($service->getFunctions());
+        SoapWrapper::service('Irix', function ($service) {
             var_dump($service->call('Hotel_GetOfferDetails', (array)$this->irixRequest->ReservationCancelRQ()));
         });
     }
-
-
-    public function AuthHeader()
-    {
-        $query = new \StdClass();
-        $query->AuthHeader = new \stdClass();
-        $query->AuthHeader->ResellerCode = "CHRYSALIS";
-        $query->AuthHeader->Username = "chrysalisws";
-        $query->AuthHeader->Password = "Qwerty1!";
-        return $query;
-    }
-
 
 }

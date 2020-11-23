@@ -86,6 +86,7 @@ class STRequest
         $query->session="p1vt3v799u9dj5aiskcm3v4040vl0eit";
         $query->id_hotel="72";
         $query->langue="en";
+        return $query;
     }
     public function devisRequest(){
         $query = new \StdClass();
@@ -177,7 +178,7 @@ class STRequest
         $query->session = "";
         return $query;
     }
-    public function getreservatioRequestn(){
+    public function getreservatioRequest(){
         $query = new \StdClass();
         $query->login = "urplanethotels";
         $query->pw = "urplanet@2020GHD";

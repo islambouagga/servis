@@ -12,7 +12,6 @@ class IRIXRequest
         $query->GetCountriesRQ =  new \stdClass();
         $query->GetCountriesRQ->Filters= new \stdClass();
         $query->GetCountriesRQ->Filters->CountryName="U";
-//        var_dump($query);
         return $query;
     }
 
